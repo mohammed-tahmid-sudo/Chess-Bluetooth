@@ -89,7 +89,6 @@ bool isSameColor(int piece, int turn) {
     return (turn == 0) ? isWhitePiece(piece) : isBlackPiece(piece);
 }
 
-// === Piece-Specific Move Validation Functions ===
 
 // Pawn moves – including single/double advance, diagonal capture, and en passant.
 bool validatePawnMove(int board[8][8], int sx, int sy, int dx, int dy, int piece, int turn) {
