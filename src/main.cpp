@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QWidget>
+#include <vector>
 
 int main(int argc, char *argv[]) {
   int height = 600;
@@ -15,15 +16,35 @@ int main(int argc, char *argv[]) {
   QMainWindow window;
   window.resize(height, weight);
 
-  for (int row = 0; row < 8; row++) {
-    for (int col = 0; col < 8; col++) {
-      QPushButton *btn = new QPushButton();
-      btn->setFixedSize(height / 8, weight / 8);
-      bool light = (row + col) % 2 == 0;
-      btn->setStyleSheet(light ? "background-color: #f0d9b5;"
-                               : // Light square color
-                             "background-color: #b58863;"); // Dark square
-      Layout->addWidget(btn, row, col);
+  std::vector<std::vector<std::string>> Board = {
+      {"r", "n", "b", "q", "k", "b", "n", "r"}, // Black major pieces
+      {"p", "p", "p", "p", "p", "p", "p", "p"}, // Black pawns
+      {"0", "0", "0", "0", "0", "0", "0", "0"}, // Empty
+      {"0", "0", "0", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "0", "0"},
+      {"P", "P", "P", "P", "P", "P", "P", "P"}, // White pawns
+      {"R", "N", "B", "Q", "K", "B", "N", "R"}  // White major pieces
+  };
+
+  for (int x = 0; x < 8; x++) {
+    for (int y = 0; y < 8; y++) {
+      QPushButton *BTN = new QPushButton();
+      BTN->setFixedSize(height / 8, weight / 8);
+
+      if ((x + y) % 2 == 0)
+        BTN->setStyleSheet("background-color: #ffffff");
+      else
+        BTN->setStyleSheet("background-color: #779556");
+
+      if (Board[x][y] == "p") {
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-Bluetooth/"
+                       "resources/Asset Images/Chess_bdt45.svg.png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+	BTN->setIconSize(Pixmap.size());
+      } 
+      Layout->addWidget(BTN, x, y);
     }
   }
   // Layout->addWidget(btn, row, col);
