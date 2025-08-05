@@ -1,10 +1,23 @@
 #include <QApplication>
+#include <iostream>
+#include <QDebug>
 #include <QGridLayout>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QWidget>
 #include <map>
 #include <vector>
+
+class ButtonEvenHandler : public QObject {
+  // Q_OBJECT
+
+public:
+  explicit ButtonEvenHandler(QObject *parent = nullptr);
+
+public slots:
+  void IfButtonClicked() { std::cout  << "Button has been pressed\n"; }
+};
+ButtonEvenHandler::ButtonEvenHandler(QObject *parent) : QObject(parent) {}
 
 int main(int argc, char *argv[]) {
   int height = 600;
@@ -51,10 +64,8 @@ int main(int argc, char *argv[]) {
         BTN->setIcon(QIcon(pixmap));
         BTN->setIconSize(pixmap.size());
       }
-
-      
-
-
+      ButtonEvenHandler *handler = new  ButtonEvenHandler;
+      QObject::connect(BTN, &QPushButton::clicked, handler, &ButtonEvenHandler::IfButtonClicked);
 
       Layout->addWidget(BTN, x, y);
     }
