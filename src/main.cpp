@@ -1,9 +1,9 @@
 #include <QApplication>
-#include <map>
 #include <QGridLayout>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QWidget>
+#include <map>
 #include <vector>
 
 int main(int argc, char *argv[]) {
@@ -42,7 +42,21 @@ int main(int argc, char *argv[]) {
       else
         BTN->setStyleSheet("background-color: #779556");
 
-       Layout->addWidget(BTN, x, y);
+      auto it = pieceMap.find(Board[x][y]);
+
+      if (it != pieceMap.end()) {
+        QPixmap pixmap("/home/tahmid/programming_files/Chess-bluetooth/"
+                       "resources/Asset Images/" +
+                       it->second);
+        BTN->setIcon(QIcon(pixmap));
+        BTN->setIconSize(pixmap.size());
+      }
+
+      
+
+
+
+      Layout->addWidget(BTN, x, y);
     }
   }
   // Layout->addWidget(btn, row, col);
