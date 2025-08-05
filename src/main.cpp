@@ -38,66 +38,82 @@ int main(int argc, char *argv[]) {
         BTN->setStyleSheet("background-color: #779556");
 
       if (Board[x][y] == "p") {
-        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_pdt45.svg.png");
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/"
+                       "resources/Asset Images/p.png");
         QIcon icon(Pixmap);
         BTN->setIcon(icon);
-	BTN->setIconSize(Pixmap.size());
+        BTN->setIconSize(Pixmap.size());
       } else if (Board[x][y] == "P") {
-        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/"
+                       "resources/Asset Images/P.png");
         QIcon icon(Pixmap);
         BTN->setIcon(icon);
-	BTN->setIconSize(Pixmap.size());
+        BTN->setIconSize(Pixmap.size());
       } else if (Board[x][y] == "k") {
-        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/"
+                       "resources/Asset Images/k.png");
         QIcon icon(Pixmap);
         BTN->setIcon(icon);
-	BTN->setIconSize(Pixmap.size());
-      } else if (Board[x][y] == "r") {
-        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
-        QIcon icon(Pixmap);
-        BTN->setIcon(icon);
-	BTN->setIconSize(Pixmap.size());
-      } else if (Board[x][y] == "R") {
-        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
-        QIcon icon(Pixmap);
-        BTN->setIcon(icon);
-	BTN->setIconSize(Pixmap.size());
-      } else if (Board[x][y] == "b") {
-        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
-        QIcon icon(Pixmap);
-        BTN->setIcon(icon);
-	BTN->setIconSize(Pixmap.size());
-      } else if (Board[x][y] == "B") {
-        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
-        QIcon icon(Pixmap);
-        BTN->setIcon(icon);
-	BTN->setIconSize(Pixmap.size());
-      } else if (Board[x][y] == "k") {
-        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
-        QIcon icon(Pixmap);
-        BTN->setIcon(icon);
-	BTN->setIconSize(Pixmap.size());
+        BTN->setIconSize(Pixmap.size());
       } else if (Board[x][y] == "K") {
-        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/"
+                       "resources/Asset Images/K.png");
         QIcon icon(Pixmap);
         BTN->setIcon(icon);
-	BTN->setIconSize(Pixmap.size());
+        BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "r") {
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/resources/Asset Images/r.png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+        BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "R") {
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/resources/Asset Images/R.png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+        BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "b") {
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/resources/Asset Images/b.png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+        BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "B") {
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/resources/Asset Images/B.png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+        BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "n") {
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/resources/Asset Images/n.png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+        BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "N") {
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/resources/Asset Images/N.png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+        BTN->setIconSize(Pixmap.size());
       } else if (Board[x][y] == "q") {
-        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/resources/Asset Images/q.png");
         QIcon icon(Pixmap);
         BTN->setIcon(icon);
-	BTN->setIconSize(Pixmap.size());
-      }
+        BTN->setIconSize(Pixmap.size());
+      }else if (Board[x][y] == "Q") {
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/resources/Asset Images/Q.png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+        BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "b") {
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/resources/Asset Images/b.png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+        BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "b") {
+        QPixmap Pixmap("/home/tahmid/programming_files/Chess-bluetooth/resources/Asset Images/B.png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+        BTN->setIconSize(Pixmap.size());
+      } 
 
-
-	
-
-
-
-	
-      Layout->addWidget(BTN, x, y);
-    }
-  }
+      Layout->addWidget(BTN, x, y); } }
   // Layout->addWidget(btn, row, col);
   window.setCentralWidget(Centrlll);
   window.show();
