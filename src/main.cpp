@@ -47,7 +47,54 @@ int main(int argc, char *argv[]) {
         QIcon icon(Pixmap);
         BTN->setIcon(icon);
 	BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "k") {
+        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+	BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "r") {
+        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+	BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "R") {
+        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+	BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "b") {
+        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+	BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "B") {
+        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+	BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "k") {
+        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+	BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "K") {
+        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+	BTN->setIconSize(Pixmap.size());
+      } else if (Board[x][y] == "q") {
+        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+	BTN->setIconSize(Pixmap.size());
       }
+
+
+	
+
+
+
+	
       Layout->addWidget(BTN, x, y);
     }
   }
