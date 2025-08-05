@@ -9,6 +9,8 @@ UIC = uic-qt5
 RCC = rcc-qt5
 
 # Directories
+# CXXFLAGS += -fPIE
+# LDFLAGS += -pie
 SRC_DIR = src
 BUILD_DIR = build
 UI_DIR = ui
@@ -23,7 +25,8 @@ QT_FLAGS = $(shell pkg-config --cflags --libs $(QT_MODULES) $(QT_BLUETOOTH_CHECK
 PYTHON_FLAGS = $(shell $(PYTHON)-config --cflags --ldflags --embed 2>/dev/null || $(PYTHON)-config --cflags --ldflags)
 
 # Compiler flags
-CXXFLAGS = -std=c++17 -Wall -Wextra -g -O2
+# CXXFLAGS = -std=c++17 -Wall -Wextra -g -O2
+CXXFLAGS = -std=c++17 -Wall -Wextra -g -O2 -fPIC
 INCLUDES = -I$(SRC_DIR) -I$(BUILD_DIR) -I/usr/include/python3.13
 
 # Source files (adjust as you add more files)

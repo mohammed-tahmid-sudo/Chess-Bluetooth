@@ -38,12 +38,16 @@ int main(int argc, char *argv[]) {
         BTN->setStyleSheet("background-color: #779556");
 
       if (Board[x][y] == "p") {
-        QPixmap Pixmap("/home/tahmid/programming_files/Chess-Bluetooth/"
-                       "resources/Asset Images/Chess_bdt45.svg.png");
+        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_pdt45.svg.png");
         QIcon icon(Pixmap);
         BTN->setIcon(icon);
 	BTN->setIconSize(Pixmap.size());
-      } 
+      } else if (Board[x][y] == "P") {
+        QPixmap Pixmap("/home/tahmid/Chess-bluetooth/resources/Asset Images/Chess_rdt45.svg (1).png");
+        QIcon icon(Pixmap);
+        BTN->setIcon(icon);
+	BTN->setIconSize(Pixmap.size());
+      }
       Layout->addWidget(BTN, x, y);
     }
   }
