@@ -1,0 +1,3 @@
+# This file marks this directory for makebranch build system
+# When present, Neovim will search for Makefile in parent directories
+# This allows building the Chess-bluetooth project from any file in resources/

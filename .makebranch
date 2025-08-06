@@ -1,0 +1,3 @@
+# This file marks the Chess-bluetooth project root for makebranch build system
+# When present, Neovim will search for Makefile starting from this directory
+# This allows building the Chess-bluetooth project from the root level files
