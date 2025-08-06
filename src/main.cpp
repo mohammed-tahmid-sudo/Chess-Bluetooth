@@ -58,8 +58,7 @@ int main(int argc, char *argv[]) {
       auto it = pieceMap.find(Board[x][y]);
 
       if (it != pieceMap.end()) {
-        QPixmap pixmap("/home/tahmid/programming_files/Chess-bluetooth/"
-                       "resources/Asset Images/" +
+        QPixmap pixmap("resources/Asset Images/" +
                        it->second);
         BTN->setIcon(QIcon(pixmap));
         BTN->setIconSize(pixmap.size());
