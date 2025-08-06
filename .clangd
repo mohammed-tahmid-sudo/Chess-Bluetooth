@@ -1,0 +1,55 @@
+CompileFlags:
+  Add:
+    # Qt-specific macro definitions
+    - -DQ_OBJECT
+    - -Dslots=
+    - -Dsignals=public
+    - -Demit=
+    # Additional Qt library flags
+    - -DQT_WIDGETS_LIB
+    - -DQT_GUI_LIB
+    - -DQT_CORE_LIB
+    - -DQT_NETWORK_LIB
+    # Improve Qt moc understanding
+    - -DQ_MOC_RUN
+    - -DQ_MOC_OUTPUT_REVISION=68
+    # Better C++ standard compliance for Qt
+    - -std=c++17
+    - -fPIC
+  Remove:
+    # Remove noisy warnings that Qt headers might trigger
+    - -Wshadow
+    - -Wconversion
+    - -Wsign-conversion
+
+Diagnostics:
+  # Suppress common Qt-related "errors" that aren't actually errors
+  Suppress:
+    - "unused-parameter"
+    - "missing-declarations"
+    - "unknown_typename"
+  # Don't show diagnostics for system headers (like Qt)
+  ClangTidy:
+    FastCheckFilter: Strict
+    Remove:
+      # Remove checks that are problematic with Qt
+      - "readability-*"
+      - "modernize-use-trailing-return-type"
+      - "cppcoreguidelines-avoid-c-arrays"
+      - "hicpp-avoid-c-arrays"
+      - "modernize-avoid-c-arrays"
+      # Qt has its own patterns
+      - "cppcoreguidelines-pro-type-vararg"
+      - "hicpp-vararg"
+
+Index:
+  # Index Qt headers for better completion
+  Background: Build
+  
+Completion:
+  # Show all available completions
+  AllScopes: true
+
+Hover:
+  # Show more detailed information on hover
+  ShowAKA: true

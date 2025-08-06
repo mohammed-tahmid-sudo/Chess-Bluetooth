@@ -30,7 +30,8 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -g -O2 -fPIC
 INCLUDES = -I$(SRC_DIR) -I$(BUILD_DIR) -I/usr/include/python3.13
 
 # Source files (adjust as you add more files)
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
+# Exclude test.cpp as it has its own main function
+SOURCES = $(filter-out $(SRC_DIR)/test.cpp, $(wildcard $(SRC_DIR)/*.cpp))
 HEADERS = $(wildcard $(SRC_DIR)/*.h)
 UI_FILES = $(wildcard $(UI_DIR)/*.ui)
 QRC_FILES = $(wildcard $(RESOURCE_DIR)/*.qrc)
