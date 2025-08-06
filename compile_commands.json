@@ -1,0 +1,7 @@
+[
+  {
+    "directory": "/home/tahmid/programming_files/Chess-bluetooth",
+    "command": "g++ -std=c++17 -Wall -Wextra -g -O2 -fPIC -Isrc -Ibuild -I/usr/include/python3.13 -DQT_WIDGETS_LIB -I/usr/include/qt5/QtWidgets -I/usr/include/qt5 -DQT_GUI_LIB -I/usr/include/qt5/QtGui -DQT_NETWORK_LIB -I/usr/include/qt5/QtNetwork -DQT_CORE_LIB -I/usr/include/qt5/QtCore -c src/main.cpp -o build/main.o",
+    "file": "src/main.cpp"
+  }
+]
