@@ -1,0 +1,17 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource>
+        <file alias="resources/Asset Images/b.png">Asset Images/b.png</file>
+        <file alias="resources/Asset Images/k.png">Asset Images/k.png</file>
+        <file alias="resources/Asset Images/n.png">Asset Images/n.png</file>
+        <file alias="resources/Asset Images/p.png">Asset Images/p.png</file>
+        <file alias="resources/Asset Images/q.png">Asset Images/q.png</file>
+        <file alias="resources/Asset Images/r.png">Asset Images/r.png</file>
+        <file alias="resources/Asset Images/B.png">Asset Images/B.png</file>
+        <file alias="resources/Asset Images/K.png">Asset Images/K.png</file>
+        <file alias="resources/Asset Images/N.png">Asset Images/N.png</file>
+        <file alias="resources/Asset Images/P.png">Asset Images/P.png</file>
+        <file alias="resources/Asset Images/Q.png">Asset Images/Q.png</file>
+        <file alias="resources/Asset Images/R.png">Asset Images/R.png</file>
+    </qresource>
+</RCC>

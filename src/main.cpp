@@ -1,11 +1,12 @@
-#include "qchar.h"
+#include "qpushbutton.h"
 #include <QApplication>
 #include <QGridLayout>
-#include <QPushButton>
 #include <QIcon>
 #include <QMouseEvent>
 #include <QObject>
+#include <QPushButton>
 #include <QWidget>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -29,6 +30,13 @@ int main(int argc, char *argv[]) {
       {"", "", "", "", "", "", "", ""},
       {"P.png", "P.png", "P.png", "P.png", "P.png", "P.png", "P.png", "P.png"},
       {"R.png", "N.png", "B.png", "Q.png", "K.png", "B.png", "N.png", "R.png"}};
+  std::vector<std::vector<QPushButton *>> buttons(
+      8, std::vector<QPushButton *>(8));
+
+  bool IsAnyButtonsPressed = false;
+  int PreviousButtonLocationX = 0;
+  int PreviousButtonLocationY = 0;
+  // std::string holder;
 
   for (int x = 0; x < 8; x++) {
     for (int y = 0; y < 8; y++) {
@@ -37,8 +45,9 @@ int main(int argc, char *argv[]) {
       btn->setFixedSize(window.height() / 8, window.width() / 8);
 
       if (!board[x][y].empty()) {
-        btn->setIcon(QIcon(":/resources/Asset Images/" + QString::fromStdString(board[x][y])));
-	btn->setIconSize(btn->size());
+        btn->setIcon(QIcon(":/resources/Asset Images/" +
+                           QString::fromStdString(board[x][y])));
+        btn->setIconSize(btn->size());
       }
 
       if ((x + y) % 2 == 0)
@@ -47,8 +56,35 @@ int main(int argc, char *argv[]) {
         btn->setStyleSheet("background-color: gray;");
 
       grid->addWidget(btn, x, y);
+      buttons[x][y] = btn;
+
+      QObject::connect(btn, &QPushButton::clicked, [&, x, y]() {
+        std::cout << "Button is pressed" << std::endl;
+        if (IsAnyButtonsPressed) {
+          if (board[x][y].empty()) {
+            // holder = board[x][y]
+            board[x][y] =
+                board[PreviousButtonLocationX][PreviousButtonLocationY];
+            board[PreviousButtonLocationX][PreviousButtonLocationY] = "";
+
+            // Update icons after move:
+            buttons[x][y]->setIcon(QIcon(":/resources/Asset Images/" +
+                                         QString::fromStdString(board[x][y])));
+            buttons[x][y]->setIconSize(buttons[x][y]->size());
+            buttons[PreviousButtonLocationX][PreviousButtonLocationY]->setIcon(
+                QIcon());
+            IsAnyButtonsPressed = false;
+          }
+          IsAnyButtonsPressed = false;
+        } else {
+          IsAnyButtonsPressed = true;
+          PreviousButtonLocationX = x;
+          PreviousButtonLocationY = y;
+        }
+      });
     }
   }
+  // }
   window.setLayout(grid);
   window.show();
   return app.exec();
