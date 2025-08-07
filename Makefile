@@ -4,9 +4,9 @@
 # Compiler and tools
 CXX = g++
 PYTHON = python3
-MOC = moc-qt5
-UIC = uic-qt5
-RCC = rcc-qt5
+MOC = moc
+UIC = uic
+RCC = rcc
 
 # Directories
 # CXXFLAGS += -fPIE

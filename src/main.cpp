@@ -1,4 +1,3 @@
-#include "qpushbutton.h"
 #include <QApplication>
 #include <QGridLayout>
 #include <QIcon>
