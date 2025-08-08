@@ -20,15 +20,27 @@ int main(int argc, char *argv[]) {
   // Create a main window/widget
   QGridLayout *grid = new QGridLayout(&window);
 
+  // std::vector<std::vector<std::string>> board = {
+  //     {"r.png", "n.png", "b.png", "q.png", "k.png", "b.png", "n.png", "r.png"},
+  //     {"p.png", "p.png", "p.png", "p.png", "p.png", "p.png", "p.png", "p.png"},
+  //     {"", "", "", "", "", "", "", ""},
+  //     {"", "", "", "", "", "", "", ""},
+  //     {"", "", "", "", "", "", "", ""},
+  //     {"", "", "", "", "", "", "", ""},
+  //     {"P.png", "P.png", "P.png", "P.png", "P.png", "P.png", "P.png", "P.png"},
+  //     {"R.png", "N.png", "B.png", "Q.png", "K.png", "B.png", "N.png", "R.png"}};
+  
+
   std::vector<std::vector<std::string>> board = {
-      {"r.png", "n.png", "b.png", "q.png", "k.png", "b.png", "n.png", "r.png"},
-      {"p.png", "p.png", "p.png", "p.png", "p.png", "p.png", "p.png", "p.png"},
+      {"RB.png", "NB.png", "BN.png", "QB.png", "KB.png", "BB.png", "NB.png", "RB.png"},
+      {"PB.png", "PB.png", "PB.png", "PB.png", "PB.png", "PB.png", "PB.png", "PB.png"},
       {"", "", "", "", "", "", "", ""},
       {"", "", "", "", "", "", "", ""},
       {"", "", "", "", "", "", "", ""},
       {"", "", "", "", "", "", "", ""},
-      {"P.png", "P.png", "P.png", "P.png", "P.png", "P.png", "P.png", "P.png"},
-      {"R.png", "N.png", "B.png", "Q.png", "K.png", "B.png", "N.png", "R.png"}};
+      {"PW.png", "PW.png", "PW.png", "PW.png", "PW.png", "PW.png", "PW.png", "PW.png"},
+      {"RW.png", "NW.png", "BW.png", "QW.png", "KW.png", "BW.png", "NW.png", "RW.png"}};
+  
   std::vector<std::vector<QPushButton *>> buttons(
       8, std::vector<QPushButton *>(8));
 
@@ -83,7 +95,7 @@ int main(int argc, char *argv[]) {
       });
     }
   }
-  // }
+
   window.setLayout(grid);
   window.show();
   return app.exec();
