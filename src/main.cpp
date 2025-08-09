@@ -5,10 +5,18 @@
 #include <QObject>
 #include <QPushButton>
 #include <QWidget>
+#include <cctype>
 #include <iostream>
 #include <string>
 #include <vector>
 
+QPushButton *createImageButton(const QString &text, const QString &iconPath,
+                               const QSize &iconSize) {
+  QPushButton *button = new QPushButton(text);
+  button->setIcon(QIcon(iconPath));
+  button->setIconSize(iconSize);
+  return button;
+}
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
   int height = 500;
@@ -20,33 +28,37 @@ int main(int argc, char *argv[]) {
   // Create a main window/widget
   QGridLayout *grid = new QGridLayout(&window);
 
-  // std::vector<std::vector<std::string>> board = {
-  //     {"r.png", "n.png", "b.png", "q.png", "k.png", "b.png", "n.png", "r.png"},
-  //     {"p.png", "p.png", "p.png", "p.png", "p.png", "p.png", "p.png", "p.png"},
-  //     {"", "", "", "", "", "", "", ""},
-  //     {"", "", "", "", "", "", "", ""},
-  //     {"", "", "", "", "", "", "", ""},
-  //     {"", "", "", "", "", "", "", ""},
-  //     {"P.png", "P.png", "P.png", "P.png", "P.png", "P.png", "P.png", "P.png"},
-  //     {"R.png", "N.png", "B.png", "Q.png", "K.png", "B.png", "N.png", "R.png"}};
-  
-
   std::vector<std::vector<std::string>> board = {
-      {"RB.png", "NB.png", "BN.png", "QB.png", "KB.png", "BB.png", "NB.png", "RB.png"},
-      {"PB.png", "PB.png", "PB.png", "PB.png", "PB.png", "PB.png", "PB.png", "PB.png"},
+      {"r.png", "n.png", "b.png", "q.png", "k.png", "b.png", "n.png", "r.png"},
+      {"p.png", "p.png", "p.png", "p.png", "p.png", "p.png", "p.png", "p.png"},
       {"", "", "", "", "", "", "", ""},
       {"", "", "", "", "", "", "", ""},
       {"", "", "", "", "", "", "", ""},
       {"", "", "", "", "", "", "", ""},
-      {"PW.png", "PW.png", "PW.png", "PW.png", "PW.png", "PW.png", "PW.png", "PW.png"},
-      {"RW.png", "NW.png", "BW.png", "QW.png", "KW.png", "BW.png", "NW.png", "RW.png"}};
-  
+      {"P.png", "P.png", "P.png", "P.png", "P.png", "P.png", "P.png", "P.png"},
+      {"R.png", "N.png", "B.png", "Q.png", "K.png", "B.png", "N.png", "R.png"}};
+
+  // std::vector<std::vector<std::string>> board = {
+  //     {"RB.png", "NB.png", "BN.png", "QB.png", "KB.png", "BB.png", "NB.png",
+  //     "RB.png"},
+  //     {"PB.png", "PB.png", "PB.png", "PB.png", "PB.png", "PB.png", "PB.png",
+  //     "PB.png"},
+  //     {"", "", "", "", "", "", "", ""},
+  //     {"", "", "", "", "", "", "", ""},
+  //     {"", "", "", "", "", "", "", ""},
+  //     {"", "", "", "", "", "", "", ""},
+  //     {"PW.png", "PW.png", "PW.png", "PW.png", "PW.png", "PW.png", "PW.png",
+  //     "PW.png"},
+  //     {"RW.png", "NW.png", "BW.png", "QW.png", "KW.png", "BW.png", "NW.png",
+  //     "RW.png"}};
+
   std::vector<std::vector<QPushButton *>> buttons(
       8, std::vector<QPushButton *>(8));
 
   bool IsAnyButtonsPressed = false;
   int PreviousButtonLocationX = 0;
   int PreviousButtonLocationY = 0;
+  std::string PieceType;
   // std::string holder;
 
   for (int x = 0; x < 8; x++) {
@@ -69,30 +81,33 @@ int main(int argc, char *argv[]) {
       grid->addWidget(btn, x, y);
       buttons[x][y] = btn;
 
-      QObject::connect(btn, &QPushButton::clicked, [&, x, y]() {
-        std::cout << "Button is pressed" << std::endl;
-        if (IsAnyButtonsPressed) {
-          if (board[x][y].empty()) {
-            // holder = board[x][y]
-            board[x][y] =
-                board[PreviousButtonLocationX][PreviousButtonLocationY];
-            board[PreviousButtonLocationX][PreviousButtonLocationY] = "";
-
-            // Update icons after move:
-            buttons[x][y]->setIcon(QIcon(":/resources/Asset Images/" +
-                                         QString::fromStdString(board[x][y])));
-            buttons[x][y]->setIconSize(buttons[x][y]->size());
-            buttons[PreviousButtonLocationX][PreviousButtonLocationY]->setIcon(
-                QIcon());
-            IsAnyButtonsPressed = false;
-          }
-          IsAnyButtonsPressed = false;
-        } else {
-          IsAnyButtonsPressed = true;
-          PreviousButtonLocationX = x;
-          PreviousButtonLocationY = y;
-        }
-      });
+      QObject::connect(
+          btn, &QPushButton::clicked,
+          [&, x, y]() {
+            std::cout << "Button is pressed" << std::endl;
+            if (IsAnyButtonsPressed) {
+              if (!board[x][y].empty()) {
+                if (isupper(board[x][y][0])) {
+                  PieceType = "WHITE";
+                } else {
+                  PieceType = "BLACK";
+                }
+                // if (board[x][y][0] == 'p' || board[x][y][0] == 'P') {
+                //   if (x == 1) {
+                //     if () {
+                //     }
+                //   }
+              }
+            }
+          } else {
+            if (board[x][y][0] == 'p' || board[x][y][0] == 'P') {
+              if (x == 1
+              }
+              IsAnyButtonsPressed = true;
+              PreviousButtonLocationX = x;
+              PreviousButtonLocationY = y;
+            }
+          });
     }
   }
 
