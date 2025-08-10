@@ -7,7 +7,10 @@
 #include <string>
 #include <vector>
 
-void CheckIfValidMove(int CurrentPosX, int CurrentPoxY, int ExpectingPosX, int ExpectedPosY, std::vector<std::vector<std::string>>) {}
+void CheckIfValidMove(int CurrentPosX, int CurrentPoxY, int ExpectingPosX, int ExpectedPosY, std::vector<std::vector<std::string>>, char Race, ) { 
+
+
+}
 
 int main(int argc, char *argv[]) {
   QApplication app(argc, argv);
