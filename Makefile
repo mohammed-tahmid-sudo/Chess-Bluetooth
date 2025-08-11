@@ -687,3 +687,6 @@ FORCE:
 
 .SUFFIXES:
 
+run: Chess-bluetooth  
+	./Chess-bluetooth
+

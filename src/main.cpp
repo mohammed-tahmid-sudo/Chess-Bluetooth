@@ -1,15 +1,15 @@
 #include <QApplication>
-#include <QMainWindow>
-#include <QPainter>
-#include <QMouseEvent>
-#include <QWidget>
 #include <QLabel>
+#include <QMainWindow>
+#include <QMouseEvent>
+#include <QPainter>
 #include <QVBoxLayout>
+#include <QWidget>
+#include <cmath>
 #include <iostream>
 #include <map>
 #include <string>
 #include <vector>
-#include <cmath>
 
 bool CheckIfValidMove(int CurrentPosX, int CurrentPosY, int ExpectedPosX,
                       int ExpectedPosY,
@@ -161,198 +161,77 @@ bool CheckIfValidMove(int CurrentPosX, int CurrentPosY, int ExpectedPosX,
 }
 
 // int main(int argc, char *argv[]) {
+// int main() {
 //   std::vector<std::vector<std::string>> board = {
-//       {"bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"},
-//       {"bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"},
+//       {"r", "n", "b", "q", "k", "b", "n", "r"},
+//       {"p", "p", "p", "p", "p", "p", "p", "p"},
 //       {"", "", "", "", "", "", "", ""},
 //       {"", "", "", "", "", "", "", ""},
 //       {"", "", "", "", "", "", "", ""},
 //       {"", "", "", "", "", "", "", ""},
-//       {"wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"},
-//       {"wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"}};
+//       {"P", "P", "P", "P", "P", "P", "P", "P"},
+//       {"R", "N", "B", "Q", "K", "B", "N", "R"}};
 //
-//   QApplication app(argc, argv);
+//   // bool output = CheckIfValidMove(1, 5, 3, 5 , board, 'b', 'p' );
+//   bool output = CheckIfValidMove(1, 5, 3, 5, board, 'b', 'p');
 //
-//   QMainWindow mainWindow;
 //
-//   // Get the current palette of the main window
-//   QPalette palette = mainWindow.palette();
+//   std::cout << output << std::endl;
+//   // QApplication app(argc, argv);
+//   //
+//   // QMainWindow mainWindow;
+//   //
+//   // // Get the current palette of the main window
+//   // QPalette palette = mainWindow.palette();
+//   //
+//   // // Set the Window role color to black
+//   // palette.setColor(QPalette::Window, Qt::white);
+//   //
+//   // // Apply the modified palette to the main window
+//   // mainWindow.setPalette(palette);
+//   //
+//   // // Ensure the background is filled
+//   // mainWindow.setAutoFillBackground(true);
+//   //
+//   // mainWindow.setWindowTitle("Black Window");
+//   // mainWindow.show();
 //
-//   // Set the Window role color to black
-//   palette.setColor(QPalette::Window, Qt::white);
-//
-//   // Apply the modified palette to the main window
-//   mainWindow.setPalette(palette);
-//
-//   // Ensure the background is filled
-//   mainWindow.setAutoFillBackground(true);
-//
-//   mainWindow.setWindowTitle("Black Window");
-//   mainWindow.show();
-//
-//   return app.exec();
+//   // return app.exec();
 // }
-// --- ChessBoard widget ---
-class ChessBoard : public QWidget {
-  Q_OBJECT
 
-public:
-  ChessBoard(QWidget *parent = nullptr)
-      : QWidget(parent), squareSize(80), selectedRow(-1), selectedCol(-1),
-        turn('w') {
-    setMinimumSize(8 * squareSize, 8 * squareSize);
 
-    board = {
-        {"bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"},
-        {"bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"},
-        {"", "", "", "", "", "", "", ""},
-        {"", "", "", "", "", "", "", ""},
-        {"", "", "", "", "", "", "", ""},
-        {"", "", "", "", "", "", "", ""},
-        {"wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"},
-        {"wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"}};
-  }
+int main() {
+    std::vector<std::vector<std::string>> board = {
+        {"r", "n", "b", "q", "k", "b", "n", "r"}, // row 0 black back rank
+        {"p", "p", "p", "p", "p", "p", "p", "p"}, // row 1 black pawns
+        {"", "", "", "", "", "", "", ""},         // row 2
+        {"", "", "", "", "", "", "", ""},         // row 3
+        {"", "", "", "", "", "", "", ""},         // row 4
+        {"", "", "", "", "", "", "", ""},         // row 5
+        {"P", "P", "P", "P", "P", "P", "P", "P"}, // row 6 white pawns
+        {"R", "N", "B", "Q", "K", "B", "N", "R"}  // row 7 white back rank
+    };
 
-  void paintEvent(QPaintEvent *) override {
-    QPainter p(this);
-    QFont f = p.font();
-    f.setPointSize(32);
-    p.setFont(f);
+    // Test 1: black pawn from (1,5) to (3,5) — should be valid
+    bool output = CheckIfValidMove(1, 5, 3, 5, board, 'b', 'p');
+    std::cout << "Black pawn double step: " << output << "\n";
 
-    for (int r = 0; r < 8; ++r) {
-      for (int c = 0; c < 8; ++c) {
-        QRect rect(c * squareSize, r * squareSize, squareSize, squareSize);
-        bool light = ((r + c) % 2 == 0);
-        p.fillRect(rect, light ? QColor(240, 217, 181) : QColor(181, 136, 99));
+    // Test 2: white pawn from (6,0) to (4,0) — should be valid
+    bool test2 = CheckIfValidMove(6, 0, 4, 0, board, 'w', 'P');
+    std::cout << "White pawn double step: " << test2 << "\n";
 
-        // highlight selection
-        if (r == selectedRow && c == selectedCol) {
-          p.setBrush(QBrush(QColor(200, 200, 0, 120)));
-          p.drawRect(rect);
-          p.setBrush(Qt::NoBrush);
-        }
+    // Test 3: knight from (0,1) to (2,2) — should be valid
+    bool test3 = CheckIfValidMove(0, 1, 2, 2, board, 'b', 'n');
+    std::cout << "Black knight move: " << test3 << "\n";
 
-        // draw piece (unicode)
-        if (!board[r][c].empty()) {
-          char color = board[r][c][0];
-          char piece = board[r][c][1];
+    // Test 4: rook from (0,0) to (0,5) — should be invalid (pieces in way)
+    bool test4 = CheckIfValidMove(0, 0, 0, 5, board, 'b', 'r');
+    std::cout << "Black rook blocked move: " << test4 << "\n";
 
-          QString glyph = pieceToUnicode(color, piece);
-          p.setPen((color == 'w') ? Qt::white : Qt::black);
+    // Test 5: rook from (0,0) to (0,0) — should be valid trivially? (same pos)
+    bool test5 = CheckIfValidMove(0, 0, 0, 0, board, 'b', 'r');
+    std::cout << "Rook no-move: " << test5 << "\n";
 
-          // Draw with slight shadow/outline for readability
-          p.drawText(rect, Qt::AlignCenter, glyph);
-        }
-      }
-    }
-  }
-
-  void mousePressEvent(QMouseEvent *event) override {
-    int col = event->position().x() / squareSize;
-    int row = event->position().y() / squareSize;
-    if (col < 0 || col > 7 || row < 0 || row > 7)
-      return;
-
-    // first click: select
-    if (selectedRow == -1) {
-      if (!board[row][col].empty() && board[row][col][0] == turn) {
-        selectedRow = row;
-        selectedCol = col;
-        update();
-      }
-      // else ignore
-    } else {
-      // attempt move
-      std::string fromPiece = board[selectedRow][selectedCol];
-      if (!fromPiece.empty()) {
-        char race = fromPiece[0];
-        char name = std::tolower(fromPiece[1]);
-
-        bool ok = CheckIfValidMove(selectedRow, selectedCol, row, col, board, race, name);
-
-        // allow capture or move only if validation passes and destination not same-color
-        if (ok) {
-          // destination same color check (should be handled in validation but double-check)
-          if (!board[row][col].empty() && board[row][col][0] == race) {
-            // invalid
-          } else {
-            board[row][col] = board[selectedRow][selectedCol];
-            board[selectedRow][selectedCol].clear();
-
-            // simple promotion (pawn reaches last rank)
-            if ((board[row][col][1] == 'P' || board[row][col][1] == 'p') &&
-                (row == 0 || row == 7)) {
-              board[row][col][1] = 'Q'; // promote to queen
-            }
-
-            // toggle turn
-            turn = (turn == 'w') ? 'b' : 'w';
-          }
-        }
-      }
-
-      // clear selection always
-      selectedRow = selectedCol = -1;
-      update();
-      emit turnChanged(turn);
-    }
-  }
-
-  char currentTurn() const { return turn; }
-
-signals:
-  void turnChanged(char newTurn);
-
-private:
-  int squareSize;
-  int selectedRow, selectedCol;
-  char turn;
-  std::vector<std::vector<std::string>> board;
-
-  QString pieceToUnicode(char color, char piece) {
-    // Unicode chess pieces
-    // White: ♔♕♖♗♘♙  (U+2654..)
-    // Black: ♚♛♜♝♞♟
-    static std::map<char, QChar> white = {
-        {'k', QChar(0x2654)}, {'q', QChar(0x2655)}, {'r', QChar(0x2656)},
-        {'b', QChar(0x2657)}, {'n', QChar(0x2658)}, {'p', QChar(0x2659)}};
-    static std::map<char, QChar> black = {
-        {'k', QChar(0x265A)}, {'q', QChar(0x265B)}, {'r', QChar(0x265C)},
-        {'b', QChar(0x265D)}, {'n', QChar(0x265E)}, {'p', QChar(0x265F)}};
-
-    char lower = std::tolower(piece);
-    if (color == 'w') {
-      return QString(white.count(lower) ? white[lower] : QChar('?'));
-    } else {
-      return QString(black.count(lower) ? black[lower] : QChar('?'));
-    }
-  }
-};
-
-// --- main window and UI ---
-int main(int argc, char *argv[]) {
-  QApplication app(argc, argv);
-
-  QMainWindow mainWindow;
-  QWidget *central = new QWidget;
-  QVBoxLayout *layout = new QVBoxLayout;
-
-  ChessBoard *boardWidget = new ChessBoard;
-  QLabel *status = new QLabel(QString("Turn: White"));
-
-  QObject::connect(boardWidget, &ChessBoard::turnChanged, [&](char t) {
-    status->setText(QString("Turn: %1").arg(t == 'w' ? "White" : "Black"));
-  });
-
-  layout->addWidget(boardWidget);
-  layout->addWidget(status);
-  central->setLayout(layout);
-
-  mainWindow.setCentralWidget(central);
-  mainWindow.setWindowTitle("Qt Chess");
-  mainWindow.show();
-
-  return app.exec();
+    return 0;
 }
 
-#include "main.moc"
