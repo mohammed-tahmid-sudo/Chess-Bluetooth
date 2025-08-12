@@ -61,26 +61,44 @@ bool CheckIfValidMove(int CurrentPosX, int CurrentPosY, int ExpectedPosX,
         return true;
     }
   } else if (name == 'r' || name == 'R') {
-    if (Race == 'w') {
-      auto distance = std::distance(Board.begin() + CurrentPosX,
-                                    Board.begin() + ExpectedPosX);
+    // No-move check
+    if (CurrentPosX == ExpectedPosX && CurrentPosY == ExpectedPosY)
+      return false;
 
-      if (CurrentPosY == ExpectedPosY) {
-        if (distance) {
-          for (int i = 0; i < distance; i++) {
-            if (Board[i].empty()) {
-              return true;
-            }
-          }
-        }
+    // Rook must move in a straight line
+    if (CurrentPosX != ExpectedPosX && CurrentPosY != ExpectedPosY)
+      return false;
+
+    // Vertical move
+    if (CurrentPosX == ExpectedPosX) {
+      int step = (ExpectedPosY > CurrentPosY) ? 1 : -1;
+      for (int y = CurrentPosY + step; y != ExpectedPosY; y += step) {
+        if (!Board[CurrentPosX][y].empty())
+          return false; // blocked
       }
     }
-  } else if (Race == 'b') {
-    // I'll be implemention that later too
-  }
+    // Horizontal move
+    else if (CurrentPosY == ExpectedPosY) {
+      int step = (ExpectedPosX > CurrentPosX) ? 1 : -1;
+      for (int x = CurrentPosX + step; x != ExpectedPosX; x += step) {
+        if (!Board[x][CurrentPosY].empty())
+          return false; // blocked
+      }
+    }
 
+    // Destination square check
+    if (!Board[ExpectedPosX][ExpectedPosY].empty()) {
+      if (Board[ExpectedPosX][ExpectedPosY][0] == Race)
+        return false; // own piece there
+      if (Board[ExpectedPosX][ExpectedPosY][0] == opposite)
+        return true; // capture
+    }
+
+    return true; // empty destination
+  }
   return 0;
 }
+
 int main() {
 
   std::vector<std::vector<std::string>> board = {
@@ -90,7 +108,7 @@ int main() {
       {"", "", "", "", "", "", "", ""},         // 3
       {"", "", "", "", "", "", "", ""},         // 4
       {"", "", "", "", "", "", "", ""},         // 5
-      {"P", "P", "P", "P", "P", "P", "P", "P"}, // 6 white pawns
+      {"P", "P", "P", "P", "P", "P", "P", ""}, // 6 white pawns
       {"R", "N", "B", "Q", "K", "B", "N", "R"}  // 7 white back rank
   };
 
@@ -110,9 +128,9 @@ int main() {
   bool test4 = CheckIfValidMove(0, 0, 0, 5, board, 'b', 'r');
   std::cout << "Black rook blocked move: " << test4 << "\n";
 
-  // Test 5: rook from (0,0) to (0,0) — should be valid trivially? (same pos)
+  // Test 5: rook from (0,0) to (0,0) — should be valid trivially? (same
+  // pos)
   bool test5 = CheckIfValidMove(0, 0, 0, 0, board, 'b', 'r');
   std::cout << "Rook no-move: " << test5 << "\n";
-
   return 0;
 }
