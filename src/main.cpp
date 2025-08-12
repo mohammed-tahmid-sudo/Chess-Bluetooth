@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <cmath>
 #include <iostream>
+#include <iterator>
 #include <map>
 #include <string>
 #include <vector>
@@ -39,35 +40,48 @@ bool CheckIfValidMove(int CurrentPosX, int CurrentPosY, int ExpectedPosX,
           Board[ExpectedPosX][ExpectedPosY][0] == opposite)
         return true;
     }
-  }
-  if (Race == 'b') {
-    if (ExpectedPosX == CurrentPosX + 1 && ExpectedPosY == CurrentPosY &&
-        Board[ExpectedPosX][ExpectedPosY].empty())
-      return true;
+    if (Race == 'b') {
+      if (ExpectedPosX == CurrentPosX + 1 && ExpectedPosY == CurrentPosY &&
+          Board[ExpectedPosX][ExpectedPosY].empty())
+        return true;
 
-    // double forward from start
-    if (CurrentPosX == 1 && ExpectedPosX == CurrentPosX + 2 &&
-        ExpectedPosY == CurrentPosY &&
-        Board[CurrentPosX + 1][CurrentPosY].empty() &&
-        Board[ExpectedPosX][ExpectedPosY].empty())
-      return true;
+      // double forward from start
+      if (CurrentPosX == 1 && ExpectedPosX == CurrentPosX + 2 &&
+          ExpectedPosY == CurrentPosY &&
+          Board[CurrentPosX + 1][CurrentPosY].empty() &&
+          Board[ExpectedPosX][ExpectedPosY].empty())
+        return true;
 
-    // capture
-    if (ExpectedPosX == CurrentPosX + 1 &&
-        (ExpectedPosY == CurrentPosY - 1 || ExpectedPosY == CurrentPosY + 1) &&
-        !Board[ExpectedPosX][ExpectedPosY].empty() &&
-        Board[ExpectedPosX][ExpectedPosY][0] == opposite)
-      return true;
+      // capture
+      if (ExpectedPosX == CurrentPosX + 1 &&
+          (ExpectedPosY == CurrentPosY - 1 ||
+           ExpectedPosY == CurrentPosY + 1) &&
+          !Board[ExpectedPosX][ExpectedPosY].empty() &&
+          Board[ExpectedPosX][ExpectedPosY][0] == opposite)
+        return true;
+    }
   } else if (name == 'r' || name == 'R') {
     if (Race == 'w') {
-      // I'll be implemention that later cuase you know my brothers work
-    } else if (Race == 'b') {
-      // I'll be implemention that later too
+      auto distance = std::distance(Board.begin() + CurrentPosX,
+                                    Board.begin() + ExpectedPosX);
+
+      if (CurrentPosY == ExpectedPosY) {
+        if (distance) {
+          for (int i = 0; i < distance; i++) {
+            if (Board[i].empty()) {
+              return true;
+            }
+          }
+        }
+      }
     }
+  } else if (Race == 'b') {
+    // I'll be implemention that later too
   }
+
   return 0;
 }
-int main(int argc, char *argv[]) {
+int main() {
 
   std::vector<std::vector<std::string>> board = {
       {"r", "n", "b", "q", "k", "b", "n", "r"}, // 0 black back rank
