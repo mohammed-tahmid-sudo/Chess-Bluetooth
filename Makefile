@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_BLUETOOTH_LIB -DQT_NETWORK_LIB -DQT_DBUS_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -Wextra -D_REENTRANT $(DEFINES)
 CXXFLAGS      = -pipe -O2 -Wall -Wextra -D_REENTRANT $(DEFINES)
-INCPATH       = -I. -I. -I/usr/include/qt6 -I/usr/include/qt6/QtWidgets -I/usr/include/qt6/QtGui -I/usr/include/qt6/QtCore -I. -I/usr/lib64/qt6/mkspecs/linux-g++
+INCPATH       = -I. -I. -Isrc -I/usr/include/qt6 -I/usr/include/qt6/QtWidgets -I/usr/include/qt6/QtGui -I/usr/include/qt6/QtBluetooth -I/usr/include/qt6/QtNetwork -I/usr/include/qt6/QtDBus -I/usr/include/qt6/QtCore -I. -I/usr/lib64/qt6/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -39,8 +39,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = Chess-bluetooth1.0.0
 DISTDIR = /home/tahmid/programming_files/Chess-bluetooth/.tmp/Chess-bluetooth1.0.0
 LINK          = g++
-LFLAGS        = -Wl,-O1 -Wl,-rpath-link,/usr/lib64
-LIBS          = $(SUBLIBS) /usr/lib64/libQt6Widgets.so /usr/lib64/libQt6Gui.so /usr/lib64/libQt6Core.so -lpthread -lGLX -lOpenGL   
+LFLAGS        = -Wl,-O1
+LIBS          = $(SUBLIBS) /usr/lib64/libQt6Widgets.so /usr/lib64/libQt6Gui.so /usr/lib64/libQt6Bluetooth.so /usr/lib64/libQt6Network.so /usr/lib64/libQt6DBus.so /usr/lib64/libQt6Core.so -lpthread -lGLX -lOpenGL   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,10 +52,27 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = build/qrc_chess.cpp \
-		src/main.cpp 
-OBJECTS       = qrc_chess.o \
-		main.o
+SOURCES       = src/main.cpp \
+		src/mainwindow.cpp \
+		src/chessboard.cpp \
+		src/chessai.cpp \
+		src/bluetoothmanager.cpp \
+		src/bluetoothdialog.cpp qrc_chess.cpp \
+		moc_mainwindow.cpp \
+		moc_chessboard.cpp \
+		moc_bluetoothmanager.cpp \
+		moc_bluetoothdialog.cpp
+OBJECTS       = main.o \
+		mainwindow.o \
+		chessboard.o \
+		chessai.o \
+		bluetoothmanager.o \
+		bluetoothdialog.o \
+		qrc_chess.o \
+		moc_mainwindow.o \
+		moc_chessboard.o \
+		moc_bluetoothmanager.o \
+		moc_bluetoothdialog.o
 DIST          = /usr/lib64/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt6/mkspecs/common/unix.conf \
 		/usr/lib64/qt6/mkspecs/common/linux.conf \
@@ -65,8 +82,11 @@ DIST          = /usr/lib64/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt6/mkspecs/common/g++-base.conf \
 		/usr/lib64/qt6/mkspecs/common/g++-unix.conf \
 		/usr/lib64/qt6/mkspecs/qconfig.pri \
+		/usr/lib64/qt6/mkspecs/modules/qt_lib_bluetooth.pri \
+		/usr/lib64/qt6/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_concurrent.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_concurrent_private.pri \
+		/usr/lib64/qt6/mkspecs/modules/qt_lib_connectivity_private.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_core.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_core_private.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_dbus.pri \
@@ -104,6 +124,8 @@ DIST          = /usr/lib64/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_linguist.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_network_private.pri \
+		/usr/lib64/qt6/mkspecs/modules/qt_lib_nfc.pri \
+		/usr/lib64/qt6/mkspecs/modules/qt_lib_nfc_private.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_openglwidgets.pri \
@@ -221,6 +243,9 @@ DIST          = /usr/lib64/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt6/mkspecs/features/resources_functions.prf \
 		/usr/lib64/qt6/mkspecs/features/resources.prf \
 		/usr/lib64/qt6/mkspecs/features/moc.prf \
+		/usr/lib64/qt6/mkspecs/features/dbuscommon.pri \
+		/usr/lib64/qt6/mkspecs/features/dbusinterfaces.prf \
+		/usr/lib64/qt6/mkspecs/features/dbusadaptors.prf \
 		/usr/lib64/qt6/mkspecs/features/unix/opengl.prf \
 		/usr/lib64/qt6/mkspecs/features/uic.prf \
 		/usr/lib64/qt6/mkspecs/features/unix/thread.prf \
@@ -230,8 +255,16 @@ DIST          = /usr/lib64/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt6/mkspecs/features/exceptions.prf \
 		/usr/lib64/qt6/mkspecs/features/yacc.prf \
 		/usr/lib64/qt6/mkspecs/features/lex.prf \
-		Chess-bluetooth.pro  build/qrc_chess.cpp \
-		src/main.cpp
+		Chess-bluetooth.pro src/mainwindow.h \
+		src/chessboard.h \
+		src/chessai.h \
+		src/bluetoothmanager.h \
+		src/bluetoothdialog.h src/main.cpp \
+		src/mainwindow.cpp \
+		src/chessboard.cpp \
+		src/chessai.cpp \
+		src/bluetoothmanager.cpp \
+		src/bluetoothdialog.cpp
 QMAKE_TARGET  = Chess-bluetooth
 DESTDIR       = 
 TARGET        = Chess-bluetooth
@@ -252,8 +285,11 @@ Makefile: Chess-bluetooth.pro /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf /usr/l
 		/usr/lib64/qt6/mkspecs/common/g++-base.conf \
 		/usr/lib64/qt6/mkspecs/common/g++-unix.conf \
 		/usr/lib64/qt6/mkspecs/qconfig.pri \
+		/usr/lib64/qt6/mkspecs/modules/qt_lib_bluetooth.pri \
+		/usr/lib64/qt6/mkspecs/modules/qt_lib_bluetooth_private.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_concurrent.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_concurrent_private.pri \
+		/usr/lib64/qt6/mkspecs/modules/qt_lib_connectivity_private.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_core.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_core_private.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_dbus.pri \
@@ -291,6 +327,8 @@ Makefile: Chess-bluetooth.pro /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf /usr/l
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_linguist.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_network_private.pri \
+		/usr/lib64/qt6/mkspecs/modules/qt_lib_nfc.pri \
+		/usr/lib64/qt6/mkspecs/modules/qt_lib_nfc_private.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib64/qt6/mkspecs/modules/qt_lib_openglwidgets.pri \
@@ -408,6 +446,9 @@ Makefile: Chess-bluetooth.pro /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf /usr/l
 		/usr/lib64/qt6/mkspecs/features/resources_functions.prf \
 		/usr/lib64/qt6/mkspecs/features/resources.prf \
 		/usr/lib64/qt6/mkspecs/features/moc.prf \
+		/usr/lib64/qt6/mkspecs/features/dbuscommon.pri \
+		/usr/lib64/qt6/mkspecs/features/dbusinterfaces.prf \
+		/usr/lib64/qt6/mkspecs/features/dbusadaptors.prf \
 		/usr/lib64/qt6/mkspecs/features/unix/opengl.prf \
 		/usr/lib64/qt6/mkspecs/features/uic.prf \
 		/usr/lib64/qt6/mkspecs/features/unix/thread.prf \
@@ -418,8 +459,12 @@ Makefile: Chess-bluetooth.pro /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf /usr/l
 		/usr/lib64/qt6/mkspecs/features/yacc.prf \
 		/usr/lib64/qt6/mkspecs/features/lex.prf \
 		Chess-bluetooth.pro \
+		resources/chess.qrc \
 		/usr/lib64/libQt6Widgets.prl \
 		/usr/lib64/libQt6Gui.prl \
+		/usr/lib64/libQt6Bluetooth.prl \
+		/usr/lib64/libQt6Network.prl \
+		/usr/lib64/libQt6DBus.prl \
 		/usr/lib64/libQt6Core.prl
 	$(QMAKE) -o Makefile Chess-bluetooth.pro
 /usr/lib64/qt6/mkspecs/features/spec_pre.prf:
@@ -431,8 +476,11 @@ Makefile: Chess-bluetooth.pro /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf /usr/l
 /usr/lib64/qt6/mkspecs/common/g++-base.conf:
 /usr/lib64/qt6/mkspecs/common/g++-unix.conf:
 /usr/lib64/qt6/mkspecs/qconfig.pri:
+/usr/lib64/qt6/mkspecs/modules/qt_lib_bluetooth.pri:
+/usr/lib64/qt6/mkspecs/modules/qt_lib_bluetooth_private.pri:
 /usr/lib64/qt6/mkspecs/modules/qt_lib_concurrent.pri:
 /usr/lib64/qt6/mkspecs/modules/qt_lib_concurrent_private.pri:
+/usr/lib64/qt6/mkspecs/modules/qt_lib_connectivity_private.pri:
 /usr/lib64/qt6/mkspecs/modules/qt_lib_core.pri:
 /usr/lib64/qt6/mkspecs/modules/qt_lib_core_private.pri:
 /usr/lib64/qt6/mkspecs/modules/qt_lib_dbus.pri:
@@ -470,6 +518,8 @@ Makefile: Chess-bluetooth.pro /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf /usr/l
 /usr/lib64/qt6/mkspecs/modules/qt_lib_linguist.pri:
 /usr/lib64/qt6/mkspecs/modules/qt_lib_network.pri:
 /usr/lib64/qt6/mkspecs/modules/qt_lib_network_private.pri:
+/usr/lib64/qt6/mkspecs/modules/qt_lib_nfc.pri:
+/usr/lib64/qt6/mkspecs/modules/qt_lib_nfc_private.pri:
 /usr/lib64/qt6/mkspecs/modules/qt_lib_opengl.pri:
 /usr/lib64/qt6/mkspecs/modules/qt_lib_opengl_private.pri:
 /usr/lib64/qt6/mkspecs/modules/qt_lib_openglwidgets.pri:
@@ -587,6 +637,9 @@ Makefile: Chess-bluetooth.pro /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf /usr/l
 /usr/lib64/qt6/mkspecs/features/resources_functions.prf:
 /usr/lib64/qt6/mkspecs/features/resources.prf:
 /usr/lib64/qt6/mkspecs/features/moc.prf:
+/usr/lib64/qt6/mkspecs/features/dbuscommon.pri:
+/usr/lib64/qt6/mkspecs/features/dbusinterfaces.prf:
+/usr/lib64/qt6/mkspecs/features/dbusadaptors.prf:
 /usr/lib64/qt6/mkspecs/features/unix/opengl.prf:
 /usr/lib64/qt6/mkspecs/features/uic.prf:
 /usr/lib64/qt6/mkspecs/features/unix/thread.prf:
@@ -597,8 +650,12 @@ Makefile: Chess-bluetooth.pro /usr/lib64/qt6/mkspecs/linux-g++/qmake.conf /usr/l
 /usr/lib64/qt6/mkspecs/features/yacc.prf:
 /usr/lib64/qt6/mkspecs/features/lex.prf:
 Chess-bluetooth.pro:
+resources/chess.qrc:
 /usr/lib64/libQt6Widgets.prl:
 /usr/lib64/libQt6Gui.prl:
+/usr/lib64/libQt6Bluetooth.prl:
+/usr/lib64/libQt6Network.prl:
+/usr/lib64/libQt6DBus.prl:
 /usr/lib64/libQt6Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile Chess-bluetooth.pro
@@ -614,8 +671,10 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents resources/chess.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib64/qt6/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents build/qrc_chess.cpp src/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/mainwindow.h src/chessboard.h src/chessai.h src/bluetoothmanager.h src/bluetoothdialog.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/chessboard.cpp src/chessai.cpp src/bluetoothmanager.cpp src/bluetoothdialog.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -639,26 +698,64 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_chess.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_chess.cpp
+qrc_chess.cpp: resources/chess.qrc \
+		/usr/lib64/qt6/libexec/rcc \
+		resources/Asset\ Images/QW.png \
+		resources/Asset\ Images/NB.png \
+		resources/Asset\ Images/KB.png \
+		resources/Asset\ Images/BW.png \
+		resources/Asset\ Images/BB.png \
+		resources/Asset\ Images/RW.png \
+		resources/Asset\ Images/NW.png \
+		resources/Asset\ Images/KW.png \
+		resources/Asset\ Images/PB.png \
+		resources/Asset\ Images/RB.png \
+		resources/Asset\ Images/PW.png \
+		resources/Asset\ Images/QB.png
+	/usr/lib64/qt6/libexec/rcc -name chess resources/chess.qrc -o qrc_chess.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /usr/lib64/qt6/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib64/qt6/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_chessboard.cpp moc_bluetoothmanager.cpp moc_bluetoothdialog.cpp
 compiler_moc_header_clean:
-compiler_moc_objc_header_make_all:
-compiler_moc_objc_header_clean:
-compiler_moc_source_make_all: main.moc
-compiler_moc_source_clean:
-	-$(DEL_FILE) main.moc
-main.moc: src/main.cpp \
+	-$(DEL_FILE) moc_mainwindow.cpp moc_chessboard.cpp moc_bluetoothmanager.cpp moc_bluetoothdialog.cpp
+moc_mainwindow.cpp: src/mainwindow.h \
+		src/chessboard.h \
+		src/chessai.h \
+		src/bluetoothmanager.h \
+		src/bluetoothdialog.h \
 		moc_predefs.h \
 		/usr/lib64/qt6/libexec/moc
-	/usr/lib64/qt6/libexec/moc $(DEFINES) --include /home/tahmid/programming_files/Chess-bluetooth/moc_predefs.h -I/usr/lib64/qt6/mkspecs/linux-g++ -I/home/tahmid/programming_files/Chess-bluetooth -I/home/tahmid/programming_files/Chess-bluetooth -I/usr/include/qt6 -I/usr/include/qt6/QtWidgets -I/usr/include/qt6/QtGui -I/usr/include/qt6/QtCore -I/usr/include/c++/15 -I/usr/include/c++/15/x86_64-redhat-linux -I/usr/include/c++/15/backward -I/usr/lib/gcc/x86_64-redhat-linux/15/include -I/usr/local/include -I/usr/include src/main.cpp -o main.moc
+	/usr/lib64/qt6/libexec/moc $(DEFINES) --include /home/tahmid/programming_files/Chess-bluetooth/moc_predefs.h -I/usr/lib64/qt6/mkspecs/linux-g++ -I/home/tahmid/programming_files/Chess-bluetooth -I/home/tahmid/programming_files/Chess-bluetooth -I/home/tahmid/programming_files/Chess-bluetooth/src -I/usr/include/qt6 -I/usr/include/qt6/QtWidgets -I/usr/include/qt6/QtGui -I/usr/include/qt6/QtBluetooth -I/usr/include/qt6/QtNetwork -I/usr/include/qt6/QtDBus -I/usr/include/qt6/QtCore -I/usr/include/c++/15 -I/usr/include/c++/15/x86_64-redhat-linux -I/usr/include/c++/15/backward -I/usr/lib/gcc/x86_64-redhat-linux/15/include -I/usr/local/include -I/usr/include src/mainwindow.h -o moc_mainwindow.cpp
 
+moc_chessboard.cpp: src/chessboard.h \
+		src/chessai.h \
+		moc_predefs.h \
+		/usr/lib64/qt6/libexec/moc
+	/usr/lib64/qt6/libexec/moc $(DEFINES) --include /home/tahmid/programming_files/Chess-bluetooth/moc_predefs.h -I/usr/lib64/qt6/mkspecs/linux-g++ -I/home/tahmid/programming_files/Chess-bluetooth -I/home/tahmid/programming_files/Chess-bluetooth -I/home/tahmid/programming_files/Chess-bluetooth/src -I/usr/include/qt6 -I/usr/include/qt6/QtWidgets -I/usr/include/qt6/QtGui -I/usr/include/qt6/QtBluetooth -I/usr/include/qt6/QtNetwork -I/usr/include/qt6/QtDBus -I/usr/include/qt6/QtCore -I/usr/include/c++/15 -I/usr/include/c++/15/x86_64-redhat-linux -I/usr/include/c++/15/backward -I/usr/lib/gcc/x86_64-redhat-linux/15/include -I/usr/local/include -I/usr/include src/chessboard.h -o moc_chessboard.cpp
+
+moc_bluetoothmanager.cpp: src/bluetoothmanager.h \
+		moc_predefs.h \
+		/usr/lib64/qt6/libexec/moc
+	/usr/lib64/qt6/libexec/moc $(DEFINES) --include /home/tahmid/programming_files/Chess-bluetooth/moc_predefs.h -I/usr/lib64/qt6/mkspecs/linux-g++ -I/home/tahmid/programming_files/Chess-bluetooth -I/home/tahmid/programming_files/Chess-bluetooth -I/home/tahmid/programming_files/Chess-bluetooth/src -I/usr/include/qt6 -I/usr/include/qt6/QtWidgets -I/usr/include/qt6/QtGui -I/usr/include/qt6/QtBluetooth -I/usr/include/qt6/QtNetwork -I/usr/include/qt6/QtDBus -I/usr/include/qt6/QtCore -I/usr/include/c++/15 -I/usr/include/c++/15/x86_64-redhat-linux -I/usr/include/c++/15/backward -I/usr/lib/gcc/x86_64-redhat-linux/15/include -I/usr/local/include -I/usr/include src/bluetoothmanager.h -o moc_bluetoothmanager.cpp
+
+moc_bluetoothdialog.cpp: src/bluetoothdialog.h \
+		src/bluetoothmanager.h \
+		moc_predefs.h \
+		/usr/lib64/qt6/libexec/moc
+	/usr/lib64/qt6/libexec/moc $(DEFINES) --include /home/tahmid/programming_files/Chess-bluetooth/moc_predefs.h -I/usr/lib64/qt6/mkspecs/linux-g++ -I/home/tahmid/programming_files/Chess-bluetooth -I/home/tahmid/programming_files/Chess-bluetooth -I/home/tahmid/programming_files/Chess-bluetooth/src -I/usr/include/qt6 -I/usr/include/qt6/QtWidgets -I/usr/include/qt6/QtGui -I/usr/include/qt6/QtBluetooth -I/usr/include/qt6/QtNetwork -I/usr/include/qt6/QtDBus -I/usr/include/qt6/QtCore -I/usr/include/c++/15 -I/usr/include/c++/15/x86_64-redhat-linux -I/usr/include/c++/15/backward -I/usr/lib/gcc/x86_64-redhat-linux/15/include -I/usr/local/include -I/usr/include src/bluetoothdialog.h -o moc_bluetoothdialog.cpp
+
+compiler_moc_objc_header_make_all:
+compiler_moc_objc_header_clean:
+compiler_moc_source_make_all:
+compiler_moc_source_clean:
 compiler_uic_make_all:
 compiler_uic_clean:
 compiler_yacc_decl_make_all:
@@ -667,15 +764,52 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_source_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
-qrc_chess.o: build/qrc_chess.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_chess.o build/qrc_chess.cpp
-
-main.o: src/main.cpp main.moc
+main.o: src/main.cpp src/mainwindow.h \
+		src/chessboard.h \
+		src/chessai.h \
+		src/bluetoothmanager.h \
+		src/bluetoothdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
+
+mainwindow.o: src/mainwindow.cpp src/mainwindow.h \
+		src/chessboard.h \
+		src/chessai.h \
+		src/bluetoothmanager.h \
+		src/bluetoothdialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o src/mainwindow.cpp
+
+chessboard.o: src/chessboard.cpp src/chessboard.h \
+		src/chessai.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chessboard.o src/chessboard.cpp
+
+chessai.o: src/chessai.cpp src/chessai.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chessai.o src/chessai.cpp
+
+bluetoothmanager.o: src/bluetoothmanager.cpp src/bluetoothmanager.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bluetoothmanager.o src/bluetoothmanager.cpp
+
+bluetoothdialog.o: src/bluetoothdialog.cpp src/bluetoothdialog.h \
+		src/bluetoothmanager.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bluetoothdialog.o src/bluetoothdialog.cpp
+
+qrc_chess.o: qrc_chess.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_chess.o qrc_chess.cpp
+
+moc_mainwindow.o: moc_mainwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_chessboard.o: moc_chessboard.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_chessboard.o moc_chessboard.cpp
+
+moc_bluetoothmanager.o: moc_bluetoothmanager.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_bluetoothmanager.o moc_bluetoothmanager.cpp
+
+moc_bluetoothdialog.o: moc_bluetoothdialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_bluetoothdialog.o moc_bluetoothdialog.cpp
 
 ####### Install
 
@@ -686,7 +820,4 @@ uninstall:  FORCE
 FORCE:
 
 .SUFFIXES:
-
-run: Chess-bluetooth  
-	./Chess-bluetooth
 

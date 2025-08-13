@@ -1,0 +1,66 @@
+# Custom Makefile extension for Chess-bluetooth project
+# Usage: 
+#   make -f Makefile.custom run    # Build and run the application
+#   make -f Makefile.custom test   # Build and run with test output
+#   make -f Makefile.custom build  # Just build (same as regular make)
+#   make -f Makefile.custom clean  # Clean the project
+
+# Include the original qmake-generated Makefile
+include Makefile
+
+# Define the executable name
+EXECUTABLE = Chess-bluetooth
+
+# Custom targets
+.PHONY: run test build help
+
+# Run target - builds and executes the program
+run: $(EXECUTABLE)
+	@echo "=== Building and Running Chess-bluetooth ==="
+	./$(EXECUTABLE)
+
+# Test target - runs with verbose output for debugging
+test: $(EXECUTABLE)
+	@echo "=== Running Chess-bluetooth in Test Mode ==="
+	@echo "Current directory: $(shell pwd)"
+	@echo "Executable exists: $(shell test -f ./$(EXECUTABLE) && echo YES || echo NO)"
+	@echo "Executable permissions: $(shell ls -la ./$(EXECUTABLE) 2>/dev/null || echo 'Not found')"
+	@echo ""
+	./$(EXECUTABLE)
+
+# Build target (just an alias to the main target)
+build: $(EXECUTABLE)
+	@echo "=== Build Complete ==="
+
+# Help target
+help:
+	@echo "Chess-bluetooth Custom Makefile"
+	@echo "================================"
+	@echo ""
+	@echo "Available targets:"
+	@echo "  run    - Build and run the application"
+	@echo "  test   - Build and run with debug information"
+	@echo "  build  - Build the application (same as 'make')"
+	@echo "  clean  - Clean build files"
+	@echo "  help   - Show this help message"
+	@echo ""
+	@echo "Usage examples:"
+	@echo "  make -f Makefile.custom run"
+	@echo "  make -f Makefile.custom test"
+	@echo "  make -f Makefile.custom clean"
+	@echo ""
+	@echo "Default Qt targets are also available:"
+	@echo "  make              # Build only"
+	@echo "  make clean        # Clean"
+	@echo "  make distclean    # Deep clean"
+
+# AI test target - run Python AI module
+ai-test:
+	@echo "=== Testing AI Module ==="
+	cd ai && python3 -c "from chess_ai import ChessAI; ai = ChessAI(); print('AI initialized:', ai is not None)"
+
+# Quick development cycle
+dev: clean build run
+
+# Default target when using this Makefile
+default: help
